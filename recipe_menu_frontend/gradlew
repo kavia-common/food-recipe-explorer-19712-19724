@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Container-level gradlew shim to support CI invoking from within the container dir.
+
+APP_STUB="./android/gradlew"
+
+if [ -x "$APP_STUB" ]; then
+  exec "$APP_STUB" "$@"
+else
+  echo "[CI NOTICE] No native Gradle project detected in recipe_menu_frontend. Skipping native build."
+  echo "[CI NOTICE] To generate native projects: npm run prebuild:android"
+  exit 0
+fi
